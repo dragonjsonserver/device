@@ -15,6 +15,7 @@ namespace DragonJsonServerDevice\Service;
 class Device
 {
     use \DragonJsonServer\ServiceManagerTrait;
+	use \DragonJsonServer\EventManagerTrait;
 	use \DragonJsonServerDoctrine\EntityManagerTrait;
 	
     /**
@@ -29,7 +30,7 @@ class Device
 		$entityManager = $this->getEntityManager();
 
 		try {
-			$device = $this->getDeviceByPlatformAndCredentials($platform, $credentials);
+			$device = $this->getDeviceByPlatformAndCredentials($platform, $credentials, false);
 		} catch (\Exception $exception) {
 		}
 		if (isset($device)) {
@@ -41,6 +42,12 @@ class Device
 			->setCredentials(\Zend\Json\Encoder::encode($credentials));
 		$entityManager->persist($device);
 		$entityManager->flush();
+		$this->getEventManager()->trigger(
+			(new \DragonJsonServerDevice\Event\LinkAccount())
+				->setTarget($this)
+				->setAccount($account)
+				->setDevice($device)
+		);
 		return $device;
 	}
 	
@@ -51,7 +58,12 @@ class Device
 	public function unlinkAccount(\DragonJsonServerDevice\Entity\Device $device)
 	{
 		$entityManager = $this->getEntityManager();
-		
+
+		$this->getEventManager()->trigger(
+			(new \DragonJsonServerDevice\Event\UnlinkAccount())
+				->setTarget($this)
+				->setDevice($device)
+		);
 		$entityManager->remove($device);
 		$entityManager->flush();
 	}
@@ -77,9 +89,10 @@ class Device
 	 * Gibt das Device der übergebenen Deviceverknüpfung zurück
 	 * @param string $platform
 	 * @param array $credentials
+	 * @param boolean $triggerevent
 	 * @return \DragonJsonServerDevice\Entity\Device
 	 */
-	public function getDeviceByPlatformAndCredentials($platform, array $credentials)
+	public function getDeviceByPlatformAndCredentials($platform, array $credentials, $triggerevent = true)
 	{
 		$credentials = $this->getCredentials($platform, $credentials);
 		$entityManager = $this->getEntityManager();
@@ -89,6 +102,13 @@ class Device
 			->findOneBy(['credentials' => \Zend\Json\Encoder::encode($credentials)]);
 		if (null === $device) {
 			throw new \DragonJsonServer\Exception('incorrect credentials');
+		}
+		if ($triggerevent) {
+			$this->getEventManager()->trigger(
+				(new \DragonJsonServerDevice\Event\Login())
+					->setTarget($this)
+					->setDevice($device)
+			);
 		}
 		return $device;
 	}
