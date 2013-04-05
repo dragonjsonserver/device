@@ -1,6 +1,6 @@
 {
     "name": "dragonprojects/dragonjsonserverdevice",
-    "description": "Extension for DragonJsonServer to handle devices",
+    "description": "Extension for DragonJsonServer to link devices to accounts",
     "license": "BSD-3-Clause",
     "authors": [
         {
