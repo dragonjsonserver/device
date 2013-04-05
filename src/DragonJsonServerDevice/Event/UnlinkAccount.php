@@ -14,10 +14,6 @@ namespace DragonJsonServerDevice\Event;
  */
 class UnlinkAccount extends \Zend\EventManager\Event
 {
-	use \DragonJsonServer\ServiceManagerTrait { 
-		getServiceManager as public; 
-	}
-	
 	/**
 	 * @var string
 	 */
