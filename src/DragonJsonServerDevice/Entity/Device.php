@@ -16,17 +16,16 @@ namespace DragonJsonServerDevice\Entity;
  */
 class Device
 {
+	use \DragonJsonServerDoctrine\Entity\ModifiedTrait;
+	use \DragonJsonServerDoctrine\Entity\CreatedTrait;
+	use \DragonJsonServerAccount\Entity\AccountIdTrait;
+	
 	/** 
 	 * @Doctrine\ORM\Mapping\Id 
 	 * @Doctrine\ORM\Mapping\Column(type="integer")
 	 * @Doctrine\ORM\Mapping\GeneratedValue
 	 **/
 	protected $device_id;
-	
-	/** 
-	 * @Doctrine\ORM\Mapping\Column(type="integer")
-	 **/
-	protected $account_id;
 	
 	/** 
 	 * @Doctrine\ORM\Mapping\Column(type="string")
@@ -45,26 +44,6 @@ class Device
 	public function getDeviceId()
 	{
 		return $this->device_id;
-	}
-	
-	/**
-	 * Setzt die AccountID der Deviceverknüpfung
-	 * @param integer $account_id
-	 * @return Device
-	 */
-	public function setAccountId($account_id)
-	{
-		$this->account_id = $account_id;
-		return $this;
-	}
-	
-	/**
-	 * Gibt die AccountID der Deviceverknüpfung zurück
-	 * @return integer
-	 */
-	public function getAccountId()
-	{
-		return $this->account_id;
 	}
 	
 	/**
@@ -115,6 +94,8 @@ class Device
 	{
 		return [
 			'device_id' => $this->getDeviceId(),
+			'modified' => $this->getModified(),
+			'created' => $this->getCreated(),
 			'account_id' => $this->getAccountId(),
 			'platform' => $this->getPlatform(),
 		];
