@@ -31,10 +31,10 @@ class Device
 		$entityManager = $this->getEntityManager();
 
 		try {
-			$device = $this->getDeviceByPlatformAndCredentials($platform, $credentials, false);
+			$entity = $this->getDeviceByPlatformAndCredentials($platform, $credentials, false);
 		} catch (\Exception $exception) {
 		}
-		if (isset($device)) {
+		if (isset($entity)) {
 			throw new \DragonJsonServer\Exception('device already linked');
 		}
 		$device = (new \DragonJsonServerDevice\Entity\Device())
