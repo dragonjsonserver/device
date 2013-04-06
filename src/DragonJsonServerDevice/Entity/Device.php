@@ -94,8 +94,8 @@ class Device
 	{
 		return [
 			'device_id' => $this->getDeviceId(),
-			'modified' => $this->getModified()->getTimestamp(),
-			'created' => $this->getCreated()->getTimestamp(),
+			'modified' => $this->getModifiedTimestamp(),
+			'created' => $this->getCreatedTimestamp(),
 			'account_id' => $this->getAccountId(),
 			'platform' => $this->getPlatform(),
 		];
