@@ -23,6 +23,7 @@ class Device
 	 * @param \DragonJsonServerAccount\Entity\Account $account
 	 * @param string $platform
 	 * @param array $credentials
+	 * @return \DragonJsonServerDevice\Entity\Device
 	 */
 	public function linkAccount(\DragonJsonServerAccount\Entity\Account $account, $platform, array $credentials)
 	{
@@ -54,6 +55,7 @@ class Device
     /**
 	 * Entfernt die Deviceverknüpfung für den Account
 	 * @param \DragonJsonServerDevice\Entity\Device $device
+	 * @return Device
 	 */
 	public function unlinkAccount(\DragonJsonServerDevice\Entity\Device $device)
 	{
@@ -66,6 +68,7 @@ class Device
 		);
 		$entityManager->remove($device);
 		$entityManager->flush();
+		return $this;
 	}
 	
 	/**
