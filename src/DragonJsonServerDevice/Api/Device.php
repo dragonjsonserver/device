@@ -20,7 +20,7 @@ class Device
 	 * Erstellt eine neue Deviceverknüpfung für den Account
 	 * @param string $platform
 	 * @param object $credentials
-	 * @authenticate
+	 * @session
 	 */
 	public function linkAccount($platform = 'browser', array $credentials = ['browser_id' => ''])
 	{
@@ -38,7 +38,7 @@ class Device
 	
     /**
 	 * Entfernt die aktuelle Deviceverknüpfung für den Account
-	 * @authenticate
+	 * @session
      * @throws \DragonJsonServer\Exception
 	 */
 	public function unlinkAccount()
