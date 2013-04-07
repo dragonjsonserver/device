@@ -38,8 +38,8 @@ class Device
 	
     /**
 	 * Entfernt die aktuelle Deviceverknüpfung für den Account
-	 * @session
      * @throws \DragonJsonServer\Exception
+	 * @session
 	 */
 	public function unlinkAccount()
 	{
