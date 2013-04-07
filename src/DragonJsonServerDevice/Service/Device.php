@@ -30,11 +30,7 @@ class Device
 		$credentials = $this->getCredentials($platform, $credentials);
 		$entityManager = $this->getEntityManager();
 
-		try {
-			$entity = $this->getDeviceByPlatformAndCredentials($platform, $credentials, false);
-		} catch (\Exception $exception) {
-		}
-		if (isset($entity)) {
+		if (null !== $this->getDeviceByPlatformAndCredentials($platform, $credentials, false, false)) { 
 			throw new \DragonJsonServer\Exception('device already linked', ['device' => $entity->toArray()]);
 		}
 		$device = (new \DragonJsonServerDevice\Entity\Device())
@@ -93,9 +89,13 @@ class Device
 	 * @param string $platform
 	 * @param array $credentials
 	 * @param boolean $triggerevent
+	 * @param boolean $throwException
 	 * @return \DragonJsonServerDevice\Entity\Device
 	 */
-	public function getDeviceByPlatformAndCredentials($platform, array $credentials, $triggerevent = true)
+	public function getDeviceByPlatformAndCredentials($platform, 
+													  array $credentials, 
+			 										  $triggerevent = true, 
+													  $throwException = true)
 	{
 		$credentials = $this->getCredentials($platform, $credentials);
 		$entityManager = $this->getEntityManager();
@@ -103,7 +103,7 @@ class Device
 		$device = $entityManager
 			->getRepository('\DragonJsonServerDevice\Entity\Device')
 			->findOneBy(['platform' => $platform, 'credentials' => \Zend\Json\Encoder::encode($credentials)]);
-		if (null === $device) {
+		if (null === $device && $throwException) {
 			throw new \DragonJsonServer\Exception(
 				'invalid credentials', 
 				['platform' => $platform, 'credentials' => $credentials]
