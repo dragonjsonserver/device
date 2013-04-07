@@ -108,7 +108,7 @@ class Device
 		}
 		if ($triggerevent) {
 			$this->getEventManager()->trigger(
-				(new \DragonJsonServerDevice\Event\Login())
+				(new \DragonJsonServerDevice\Event\LoginAccount())
 					->setTarget($this)
 					->setDevice($device)
 			);

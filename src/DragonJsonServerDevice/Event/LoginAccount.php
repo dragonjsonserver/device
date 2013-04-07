@@ -12,17 +12,17 @@ namespace DragonJsonServerDevice\Event;
 /**
  * Eventklasse für den Login eines Accounts mit einem Device
  */
-class Login extends \Zend\EventManager\Event
+class LoginAccount extends \Zend\EventManager\Event
 {
 	/**
 	 * @var string
 	 */
-	protected $name = 'login';
+	protected $name = 'loginaccount';
 
     /**
      * Setzt das Device das mit dem Account eingeloggt wurde
      * @param \DragonJsonServerDevice\Entity\Device $device
-     * @return Login
+     * @return LoginAccount
      */
     public function setDevice(\DragonJsonServerDevice\Entity\Device $device)
     {
