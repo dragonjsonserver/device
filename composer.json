@@ -1,6 +1,6 @@
 {
     "name": "dragonprojects/dragonjsonserverdevice",
-    "description": "Extension for DragonJsonServer to link devices to accounts",
+    "description": "Erweiterung für den DragonJsonServer zur Verknüpfung von Devices zu Accounts",
     "license": "BSD-3-Clause",
     "authors": [
         {
