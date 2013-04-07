@@ -49,7 +49,7 @@ class Device
 		$session = $sessionService->getSession();
 		$data = $session->getData();
 		if (!isset($data['device'])) {
-			throw new \DragonJsonServer\Exception('missing device in session');
+			throw new \DragonJsonServer\Exception('missing device in session', ['session' => $session->toArray()]);
 		}
 		$serviceDevice = $serviceManager->get('Device');
 		$device = $serviceDevice->getDeviceById($data['device']['device_id']);

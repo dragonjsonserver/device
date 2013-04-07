@@ -35,7 +35,7 @@ class Device
 		} catch (\Exception $exception) {
 		}
 		if (isset($entity)) {
-			throw new \DragonJsonServer\Exception('device already linked');
+			throw new \DragonJsonServer\Exception('device already linked', ['device' => $entity->toArray()]);
 		}
 		$device = (new \DragonJsonServerDevice\Entity\Device())
 			->setAccountId($account->getAccountId())
@@ -83,7 +83,7 @@ class Device
 		
 		$device = $entityManager->find('\DragonJsonServerDevice\Entity\Device', $device_id);
 		if (null === $device) {
-			throw new \DragonJsonServer\Exception('incorrect device_id', ['device_id' => $device_id]);
+			throw new \DragonJsonServer\Exception('invalid device_id', ['device_id' => $device_id]);
 		}
 		return $device;
 	}
@@ -102,9 +102,12 @@ class Device
 
 		$device = $entityManager
 			->getRepository('\DragonJsonServerDevice\Entity\Device')
-			->findOneBy(['credentials' => \Zend\Json\Encoder::encode($credentials)]);
+			->findOneBy(['platform' => $platform, 'credentials' => \Zend\Json\Encoder::encode($credentials)]);
 		if (null === $device) {
-			throw new \DragonJsonServer\Exception('incorrect credentials');
+			throw new \DragonJsonServer\Exception(
+				'invalid credentials', 
+				['platform' => $platform, 'credentials' => $credentials]
+			);
 		}
 		if ($triggerevent) {
 			$this->getEventManager()->trigger(
@@ -127,14 +130,14 @@ class Device
 		$deviceplatforms = $this->getServiceManager()->get('Config')['deviceplatforms'];
 		if (!isset($deviceplatforms[$platform])) {
 			throw new \DragonJsonServer\Exception(
-				'incorrect platform', 
-				['platform' => $platform, 'deviceplatforms' => array_keys($deviceplatforms)]
+				'invalid platform', 
+				['platform' => $platform, 'deviceplatforms' => $deviceplatforms]
 			);
 		}
 		$normalizedCredentials = array();
 		foreach ($deviceplatforms[$platform] as $key) {
 			if (!isset($credentials[$key])) {
-				throw new \DragonJsonServer\Exception('missing credential', ['key' => $key]);
+				throw new \DragonJsonServer\Exception('missing key', ['key' => $key]);
 			}
 			$normalizedCredentials[$key] = $credentials[$key];
 		}
