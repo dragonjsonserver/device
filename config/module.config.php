@@ -12,7 +12,7 @@
  */
 return [
 	'deviceplatforms' => [
-		'browser' => [ 'browser_id' ],
+		'browser' => ['browser_id'],
 	],
     'apiclasses' => [
         '\DragonJsonServerDevice\Api\Device' => 'Device',
