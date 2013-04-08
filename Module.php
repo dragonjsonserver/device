@@ -14,6 +14,8 @@ namespace DragonJsonServerDevice;
  */
 class Module
 {
+	use \DragonJsonServer\ServiceManagerTrait;
+    
     /**
      * Gibt die Konfiguration des Moduls zurück
      * @return array
@@ -36,5 +38,24 @@ class Module
                 ],
             ],
         ];
+    }
+    
+    /**
+     * Wird bei der Initialisierung des Moduls aufgerufen
+     * @param \Zend\ModuleManager\ModuleManager $moduleManager
+     */
+    public function init(\Zend\ModuleManager\ModuleManager $moduleManager)
+    {
+    	$sharedManager = $moduleManager->getEventManager()->getSharedManager();
+    	$sharedManager->attach('DragonJsonServerAccount\Service\Account', 'removeaccount', 
+	    	function (\DragonJsonServerAccount\Event\RemoveAccount $removeAccount) {
+	    		$account = $removeAccount->getAccount();
+	    		$serviceDevice = $this->getServiceManager()->get('Device');
+	    		$device = $serviceDevice->getDeviceByAccountId($account->getAccountId(), false);
+	    		if (null !== $device) {
+	    			$serviceDevice->removeDevice($device);
+	    		}
+	    	}
+    	);
     }
 }
