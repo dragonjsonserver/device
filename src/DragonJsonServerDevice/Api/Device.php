@@ -28,7 +28,7 @@ class Device
 		
 		$sessionService = $serviceManager->get('Session');
 		$session = $sessionService->getSession();
-		$account = $serviceManager->get('Account')->getAccount($session->getAccountId());
+		$account = $serviceManager->get('Account')->getAccountByAccountId($session->getAccountId());
 		$device = $serviceManager->get('Device')->linkAccount($account, $platform, $credentials);
 		$data = $session->getData();
 		$data['device'] = $device->toArray();
@@ -70,7 +70,7 @@ class Device
 		$serviceManager = $this->getServiceManager();
 
 		$device = $serviceManager->get('Device')->getDeviceByPlatformAndCredentials($platform, $credentials);
-		$account = $serviceManager->get('Account')->getAccount($device->getAccountId());
+		$account = $serviceManager->get('Account')->getAccountByAccountId($device->getAccountId());
 		$serviceSession = $serviceManager->get('Session');
 		$session = $serviceSession->createSession($account, ['device' => $device->toArray()]);
 		$serviceSession->setSession($session);
