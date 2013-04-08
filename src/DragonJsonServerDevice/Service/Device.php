@@ -53,12 +53,12 @@ class Device
 	 * @param \DragonJsonServerDevice\Entity\Device $device
 	 * @return Device
 	 */
-	public function unlinkAccount(\DragonJsonServerDevice\Entity\Device $device)
+	public function removeDevice(\DragonJsonServerDevice\Entity\Device $device)
 	{
 		$entityManager = $this->getEntityManager();
 
 		$this->getEventManager()->trigger(
-			(new \DragonJsonServerDevice\Event\UnlinkAccount())
+			(new \DragonJsonServerDevice\Event\RemoveDevice())
 				->setTarget($this)
 				->setDevice($device)
 		);

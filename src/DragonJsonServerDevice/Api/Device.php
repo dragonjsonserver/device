@@ -41,7 +41,7 @@ class Device
      * @throws \DragonJsonServer\Exception
 	 * @session
 	 */
-	public function unlinkAccount()
+	public function removeDevice()
 	{
 		$serviceManager = $this->getServiceManager();
 
@@ -53,7 +53,7 @@ class Device
 		}
 		$serviceDevice = $serviceManager->get('Device');
 		$device = $serviceDevice->getDeviceById($data['device']['device_id']);
-		$serviceDevice->unlinkAccount($device);
+		$serviceDevice->removeDevice($device);
 		unset($data['device']);
 		$session->setData($data);
 		$sessionService->updateSession($session);

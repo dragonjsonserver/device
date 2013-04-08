@@ -12,17 +12,17 @@ namespace DragonJsonServerDevice\Event;
 /**
  * Eventklasse für die Trennung eines Accounts mit einem Device
  */
-class UnlinkAccount extends \Zend\EventManager\Event
+class RemoveDevice extends \Zend\EventManager\Event
 {
 	/**
 	 * @var string
 	 */
-	protected $name = 'unlinkaccount';
+	protected $name = 'removedevice';
 
     /**
      * Setzt das Device das mit dem Account getrennt wurde
      * @param \DragonJsonServerDevice\Entity\Device $device
-     * @return UnlinkAccount
+     * @return RemoveDevice
      */
     public function setDevice(\DragonJsonServerDevice\Entity\Device $device)
     {
