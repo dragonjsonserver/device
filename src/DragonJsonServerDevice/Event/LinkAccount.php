@@ -12,17 +12,17 @@ namespace DragonJsonServerDevice\Event;
 /**
  * Eventklasse für die Verknüpfung eines Accounts mit einem Device
  */
-class LinkAccount extends \Zend\EventManager\Event
+class CreateDevice extends \Zend\EventManager\Event
 {
 	/**
 	 * @var string
 	 */
-	protected $name = 'linkaccount';
+	protected $name = 'createdevice';
 
     /**
      * Setzt den Account der mit dem Device verknüpft wurde
      * @param \DragonJsonServerAccount\Entity\Account $account
-     * @return LinkAccount
+     * @return CreateDevice
      */
     public function setAccount(\DragonJsonServerAccount\Entity\Account $account)
     {
@@ -42,7 +42,7 @@ class LinkAccount extends \Zend\EventManager\Event
     /**
      * Setzt das Device das mit dem Account verknüpft wurde
      * @param \DragonJsonServerDevice\Entity\Device $device
-     * @return LinkAccount
+     * @return CreateDevice
      */
     public function setDevice(\DragonJsonServerDevice\Entity\Device $device)
     {

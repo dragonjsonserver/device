@@ -22,14 +22,14 @@ class Device
 	 * @param object $credentials
 	 * @session
 	 */
-	public function linkAccount($platform = 'browser', array $credentials = ['browser_id' => ''])
+	public function createDevice($platform = 'browser', array $credentials = ['browser_id' => ''])
 	{
 		$serviceManager = $this->getServiceManager();
 		
 		$sessionService = $serviceManager->get('Session');
 		$session = $sessionService->getSession();
 		$account = $serviceManager->get('Account')->getAccountByAccountId($session->getAccountId());
-		$device = $serviceManager->get('Device')->linkAccount($account, $platform, $credentials);
+		$device = $serviceManager->get('Device')->createDevice($account, $platform, $credentials);
 		$data = $session->getData();
 		$data['device'] = $device->toArray();
 		$session->setData($data);

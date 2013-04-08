@@ -25,7 +25,7 @@ class Device
 	 * @param array $credentials
 	 * @return \DragonJsonServerDevice\Entity\Device
 	 */
-	public function linkAccount(\DragonJsonServerAccount\Entity\Account $account, $platform, array $credentials)
+	public function createDevice(\DragonJsonServerAccount\Entity\Account $account, $platform, array $credentials)
 	{
 		$credentials = $this->getCredentials($platform, $credentials);
 		$entityManager = $this->getEntityManager();
@@ -40,7 +40,7 @@ class Device
 		$entityManager->persist($device);
 		$entityManager->flush();
 		$this->getEventManager()->trigger(
-			(new \DragonJsonServerDevice\Event\LinkAccount())
+			(new \DragonJsonServerDevice\Event\CreateDevice())
 				->setTarget($this)
 				->setAccount($account)
 				->setDevice($device)
