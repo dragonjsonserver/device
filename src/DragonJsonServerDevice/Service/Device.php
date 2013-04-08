@@ -30,7 +30,7 @@ class Device
 		$credentials = $this->getCredentials($platform, $credentials);
 		$entityManager = $this->getEntityManager();
 
-		if (null !== $this->getDeviceByPlatformAndCredentials($platform, $credentials, false, false)) { 
+		if (null !== $this->getDeviceByPlatformAndCredentials($platform, $credentials, false)) { 
 			throw new \DragonJsonServer\Exception('device already linked', ['device' => $entity->toArray()]);
 		}
 		$device = (new \DragonJsonServerDevice\Entity\Device())
@@ -94,7 +94,6 @@ class Device
 	 */
 	public function getDeviceByPlatformAndCredentials($platform, 
 													  array $credentials, 
-			 										  $triggerevent = true, 
 													  $throwException = true)
 	{
 		$credentials = $this->getCredentials($platform, $credentials);
@@ -107,13 +106,6 @@ class Device
 			throw new \DragonJsonServer\Exception(
 				'invalid credentials', 
 				['platform' => $platform, 'credentials' => $credentials]
-			);
-		}
-		if ($triggerevent) {
-			$this->getEventManager()->trigger(
-				(new \DragonJsonServerDevice\Event\LoginAccount())
-					->setTarget($this)
-					->setDevice($device)
 			);
 		}
 		return $device;

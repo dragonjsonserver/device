@@ -65,7 +65,7 @@ class Device
 	 * @param object $credentials
 	 * @return array
 	 */
-	public function loginAccount($platform = 'browser', array $credentials = ['browser_id' => ''])
+	public function loginDevice($platform = 'browser', array $credentials = ['browser_id' => ''])
 	{
 		$serviceManager = $this->getServiceManager();
 
