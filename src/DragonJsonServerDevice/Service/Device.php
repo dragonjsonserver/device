@@ -28,8 +28,6 @@ class Device
 	public function createDevice(\DragonJsonServerAccount\Entity\Account $account, $platform, array $credentials)
 	{
 		$credentials = $this->getCredentials($platform, $credentials);
-		$entityManager = $this->getEntityManager();
-
 		if (null !== $this->getDeviceByPlatformAndCredentials($platform, $credentials, false)) { 
 			throw new \DragonJsonServer\Exception('device already linked', ['device' => $entity->toArray()]);
 		}
@@ -37,14 +35,16 @@ class Device
 			->setAccountId($account->getAccountId())
 			->setPlatform($platform)
 			->setCredentials(\Zend\Json\Encoder::encode($credentials));
-		$entityManager->persist($device);
-		$entityManager->flush();
-		$this->getEventManager()->trigger(
-			(new \DragonJsonServerDevice\Event\CreateDevice())
-				->setTarget($this)
-				->setAccount($account)
-				->setDevice($device)
-		);
+		$this->getServiceManager()->get('Doctrine')->transactional(function ($entityManager) use ($account, $device) {
+			$entityManager->persist($device);
+			$entityManager->flush();
+			$this->getEventManager()->trigger(
+				(new \DragonJsonServerDevice\Event\CreateDevice())
+					->setTarget($this)
+					->setAccount($account)
+					->setDevice($device)
+			);
+		});
 		return $device;
 	}
 	
@@ -55,15 +55,15 @@ class Device
 	 */
 	public function removeDevice(\DragonJsonServerDevice\Entity\Device $device)
 	{
-		$entityManager = $this->getEntityManager();
-
-		$this->getEventManager()->trigger(
-			(new \DragonJsonServerDevice\Event\RemoveDevice())
-				->setTarget($this)
-				->setDevice($device)
-		);
-		$entityManager->remove($device);
-		$entityManager->flush();
+		$this->getServiceManager()->get('Doctrine')->transactional(function ($entityManager) use ($device) {
+			$this->getEventManager()->trigger(
+				(new \DragonJsonServerDevice\Event\RemoveDevice())
+					->setTarget($this)
+					->setDevice($device)
+			);
+			$entityManager->remove($device);
+			$entityManager->flush();
+		});
 		return $this;
 	}
 	
