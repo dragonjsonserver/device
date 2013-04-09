@@ -11,12 +11,16 @@
  * @return array
  */
 return [
-	'deviceplatforms' => [
-		'browser' => ['browser_id'],
+	'dragonjsonserverdevice' => [
+		'deviceplatforms' => [
+			'browser' => ['browser_id'],
+		],
 	],
-    'apiclasses' => [
-        '\DragonJsonServerDevice\Api\Device' => 'Device',
-    ],
+	'dragonjsonserver' => [
+	    'apiclasses' => [
+	        '\DragonJsonServerDevice\Api\Device' => 'Device',
+	    ],
+	],
 	'service_manager' => [
 		'invokables' => [
             'Device' => '\DragonJsonServerDevice\Service\Device',

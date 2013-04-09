@@ -137,7 +137,7 @@ class Device
 	 */
 	protected function getCredentials($platform, array $credentials)
 	{
-		$deviceplatforms = $this->getServiceManager()->get('Config')['deviceplatforms'];
+		$deviceplatforms = $this->getServiceManager()->get('Config')['dragonjsonserverdevice']['deviceplatforms'];
 		if (!isset($deviceplatforms[$platform])) {
 			throw new \DragonJsonServer\Exception(
 				'invalid platform', 

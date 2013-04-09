@@ -83,6 +83,6 @@ class Device
 	 */
 	public function getDeviceplatforms()
 	{
-        return $this->getServiceManager()->get('Config')['deviceplatforms'];
+        return $this->getServiceManager()->get('Config')['dragonjsonserverdevice']['deviceplatforms'];
 	}
 }

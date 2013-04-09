@@ -11,7 +11,9 @@
  * @return array
  */
 return [
-	'deviceplatforms' => [
-		'%platform%' => ['%key%', '%key%'],
+	'dragonjsonserverdevice' => [
+		'deviceplatforms' => [
+			'%platform%' => ['%key%', '%key%'],
+		],
 	],
 ];
