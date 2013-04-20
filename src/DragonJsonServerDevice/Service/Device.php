@@ -20,28 +20,27 @@ class Device
 	
     /**
 	 * Erstellt eine neue Deviceverknüpfung für den Account
-	 * @param \DragonJsonServerAccount\Entity\Account $account
+	 * @param integer $account_id
 	 * @param string $platform
 	 * @param array $credentials
 	 * @return \DragonJsonServerDevice\Entity\Device
 	 */
-	public function createDevice(\DragonJsonServerAccount\Entity\Account $account, $platform, array $credentials)
+	public function createDevice($account_id, $platform, array $credentials)
 	{
 		$credentials = $this->getCredentials($platform, $credentials);
 		if (null !== $this->getDeviceByPlatformAndCredentials($platform, $credentials, false)) { 
 			throw new \DragonJsonServer\Exception('device already linked', ['device' => $entity->toArray()]);
 		}
 		$device = (new \DragonJsonServerDevice\Entity\Device())
-			->setAccountId($account->getAccountId())
+			->setAccountId($account_id)
 			->setPlatform($platform)
 			->setCredentials(\Zend\Json\Encoder::encode($credentials));
-		$this->getServiceManager()->get('Doctrine')->transactional(function ($entityManager) use ($account, $device) {
+		$this->getServiceManager()->get('Doctrine')->transactional(function ($entityManager) use ($device) {
 			$entityManager->persist($device);
 			$entityManager->flush();
 			$this->getEventManager()->trigger(
 				(new \DragonJsonServerDevice\Event\CreateDevice())
 					->setTarget($this)
-					->setAccount($account)
 					->setDevice($device)
 			);
 		});

@@ -20,26 +20,6 @@ class CreateDevice extends \Zend\EventManager\Event
 	protected $name = 'createdevice';
 
     /**
-     * Setzt den Account der mit dem Device verknüpft wurde
-     * @param \DragonJsonServerAccount\Entity\Account $account
-     * @return CreateDevice
-     */
-    public function setAccount(\DragonJsonServerAccount\Entity\Account $account)
-    {
-        $this->setParam('account', $account);
-        return $this;
-    }
-
-    /**
-     * Gibt den Account der mit dem Device verknüpft wurde zurück
-     * @return \DragonJsonServerAccount\Entity\Account
-     */
-    public function getAccount()
-    {
-        return $this->getParam('account');
-    }
-
-    /**
      * Setzt das Device das mit dem Account verknüpft wurde
      * @param \DragonJsonServerDevice\Entity\Device $device
      * @return CreateDevice
