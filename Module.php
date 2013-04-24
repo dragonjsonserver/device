@@ -48,8 +48,8 @@ class Module
     {
     	$sharedManager = $moduleManager->getEventManager()->getSharedManager();
     	$sharedManager->attach('DragonJsonServerAccount\Service\Account', 'removeaccount', 
-	    	function (\DragonJsonServerAccount\Event\RemoveAccount $removeAccount) {
-	    		$account = $removeAccount->getAccount();
+	    	function (\DragonJsonServerAccount\Event\RemoveAccount $eventRemoveAccount) {
+	    		$account = $eventRemoveAccount->getAccount();
 	    		$serviceDevice = $this->getServiceManager()->get('Device');
 	    		$device = $serviceDevice->getDeviceByAccountId($account->getAccountId(), false);
 	    		if (null !== $device) {
