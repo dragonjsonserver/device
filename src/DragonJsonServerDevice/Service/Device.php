@@ -87,7 +87,8 @@ class Device
 	 * Gibt das Device der übergebenen AccountID zurück
 	 * @param integer $account_id
 	 * @param boolean $throwException
-	 * @return \DragonJsonServerDevice\Entity\Device
+	 * @return \DragonJsonServerDevice\Entity\Device|null
+     * @throws \DragonJsonServer\Exception
 	 */
 	public function getDeviceByAccountId($account_id, $throwException = true)
 	{
@@ -107,7 +108,8 @@ class Device
 	 * @param string $platform
 	 * @param array $credentials
 	 * @param boolean $throwException
-	 * @return \DragonJsonServerDevice\Entity\Device
+	 * @return \DragonJsonServerDevice\Entity\Device|null
+     * @throws \DragonJsonServer\Exception
 	 */
 	public function getDeviceByPlatformAndCredentials($platform, 
 													  array $credentials, 
