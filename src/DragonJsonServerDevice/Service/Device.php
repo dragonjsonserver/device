@@ -145,7 +145,7 @@ class Device
 				['platform' => $platform, 'deviceplatforms' => $deviceplatforms]
 			);
 		}
-		$normalizedCredentials = array();
+		$normalizedCredentials = [];
 		foreach ($deviceplatforms[$platform] as $key) {
 			if (!isset($credentials[$key])) {
 				throw new \DragonJsonServer\Exception('missing key', ['key' => $key]);
