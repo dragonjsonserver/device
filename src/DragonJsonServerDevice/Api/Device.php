@@ -31,8 +31,7 @@ class Device
 		$device = $serviceManager->get('Device')->createDevice($session->getAccountId(), $platform, $credentials);
 		$data = $session->getData();
 		$data['device'] = $device->toArray();
-		$session->setData($data);
-		$sessionService->updateSession($session);
+		$sessionService->changeData($session, $data);
 	}
 	
     /**
@@ -54,8 +53,7 @@ class Device
 		$device = $serviceDevice->getDeviceById($data['device']['device_id']);
 		$serviceDevice->removeDevice($device);
 		unset($data['device']);
-		$session->setData($data);
-		$sessionService->updateSession($session);
+		$sessionService->changeData($session, $data);
 	}
 	
     /**
