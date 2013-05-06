@@ -17,7 +17,7 @@ class RemoveDevice extends \Zend\EventManager\Event
 	/**
 	 * @var string
 	 */
-	protected $name = 'removedevice';
+	protected $name = 'RemoveDevice';
 
     /**
      * Setzt das Device das mit dem Account getrennt wurde

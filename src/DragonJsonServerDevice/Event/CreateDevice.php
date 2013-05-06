@@ -17,7 +17,7 @@ class CreateDevice extends \Zend\EventManager\Event
 	/**
 	 * @var string
 	 */
-	protected $name = 'createdevice';
+	protected $name = 'CreateDevice';
 
     /**
      * Setzt das Device das mit dem Account verknüpft wurde
