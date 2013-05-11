@@ -93,6 +93,7 @@ class Device
 	public function toArray()
 	{
 		return [
+			'entity' => 'Device',
 			'device_id' => $this->getDeviceId(),
 			'modified' => $this->getModifiedTimestamp(),
 			'created' => $this->getCreatedTimestamp(),
