@@ -38,6 +38,17 @@ class Device
 	protected $credentials;
 	
 	/**
+	 * Setzt die ID der Deviceverknüpfung
+	 * @param integer $device_id
+	 * @return Device
+	 */
+	protected function setDeviceId($device_id)
+	{
+		$this->device_id = $device_id;
+		return $this;
+	}
+	
+	/**
 	 * Gibt die ID der Deviceverknüpfung zurück
 	 * @return integer
 	 */
@@ -87,13 +98,28 @@ class Device
 	}
 	
 	/**
+	 * Setzt die Attribute der Deviceverknüpfung aus dem Array
+	 * @param array $array
+	 * @return Device
+	 */
+	public function fromArray(array $array)
+	{
+		return $this
+			->setDeviceId($array['device_id'])
+			->setModifiedTimestamp($array['modified'])
+			->setCreatedTimestamp($array['created'])
+			->setAccountId($array['account_id'])
+			->setPlatform($array['platform']);
+	}
+	
+	/**
 	 * Gibt die Attribute der Deviceverknüpfung als Array zurück
 	 * @return array
 	 */
 	public function toArray()
 	{
 		return [
-			'entity' => 'Device',
+			'__className' => __CLASS__,
 			'device_id' => $this->getDeviceId(),
 			'modified' => $this->getModifiedTimestamp(),
 			'created' => $this->getCreatedTimestamp(),
