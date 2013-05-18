@@ -74,6 +74,21 @@ class Device
 	}
 	
     /**
+	 * Gibt die Deviceverknüpfungen der Accounts zurück
+	 * @return array
+	 * @DragonJsonServerAccount\Annotation\Session
+	 */
+	public function getDevices()
+	{
+		$serviceManager = $this->getServiceManager();
+		
+		$sessionService = $serviceManager->get('Session');
+		$session = $sessionService->getSession();
+		$devices = $serviceManager->get('Device')->getDevicesByAccountId($session->getAccountId());
+		return $serviceManager->get('Doctrine')->toArray($devices);
+	}
+	
+    /**
 	 * Gibt die Einstellungen der Deviceplattformen zurück
 	 * @return array
 	 */
