@@ -57,6 +57,34 @@ class Device
 	}
 	
     /**
+	 * Entfernt die übergebene Deviceverknüpfung für den Account
+	 * @param integer $device_id
+     * @throws \DragonJsonServer\Exception
+	 * @DragonJsonServerAccount\Annotation\Session
+	 */
+	public function removeDeviceByDeviceId($device_id)
+	{
+		$serviceManager = $this->getServiceManager();
+
+		$sessionService = $serviceManager->get('Session');
+		$session = $sessionService->getSession();
+		$serviceDevice = $serviceManager->get('Device');
+		$device = $serviceDevice->getDeviceById($device_id);
+		if ($session->getAccountId() != $device->getAccountId()) {
+			throw new \DragonJsonServer\Exception(
+				'account_id not match',
+				['session' => $session->toArray(), 'device' => $device->getAccountId()]
+			);
+		}
+		$serviceDevice->removeDevice($device);
+		$data = $session->getData();
+		if (isset($data['device']) && $data['device']['device_id'] == $device->getDeviceId()) {
+			unset($data['device']);
+			$sessionService->changeData($session, $data);
+		}
+	}
+	
+    /**
 	 * Meldet den Account mit der übergebenen Deviceverknüpfung an
 	 * @param string $platform
 	 * @param object $credentials
