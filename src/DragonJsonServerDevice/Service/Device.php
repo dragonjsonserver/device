@@ -84,26 +84,6 @@ class Device
 	}
 	
 	/**
-	 * Gibt das Device der übergebenen AccountID zurück
-	 * @param integer $account_id
-	 * @param boolean $throwException
-	 * @return \DragonJsonServerDevice\Entity\Device|null
-     * @throws \DragonJsonServer\Exception
-	 */
-	public function getDeviceByAccountId($account_id, $throwException = true)
-	{
-		$entityManager = $this->getEntityManager();
-
-		$device = $entityManager
-			->getRepository('\DragonJsonServerDevice\Entity\Device')
-			->findOneBy(['account_id' => $account_id]);
-		if (null === $device && $throwException) {
-			throw new \DragonJsonServer\Exception('invalid account_id', ['account_id' => $account_id]);
-		}
-		return $device;
-	}
-	
-	/**
 	 * Gibt das Device der übergebenen Deviceverknüpfung zurück
 	 * @param string $platform
 	 * @param array $credentials
@@ -128,6 +108,20 @@ class Device
 			);
 		}
 		return $device;
+	}
+	
+	/**
+	 * Gibt die Devices der übergebenen AccountID zurück
+	 * @param integer $account_id
+	 * @return array
+	 */
+	public function getDevicesByAccountId($account_id)
+	{
+		$entityManager = $this->getEntityManager();
+
+		return $entityManager
+			->getRepository('\DragonJsonServerDevice\Entity\Device')
+			->findBy(['account_id' => $account_id]);
 	}
 	
 	/**

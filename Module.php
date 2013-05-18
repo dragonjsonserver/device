@@ -51,8 +51,8 @@ class Module
 	    	function (\DragonJsonServerAccount\Event\RemoveAccount $eventRemoveAccount) {
 	    		$account = $eventRemoveAccount->getAccount();
 	    		$serviceDevice = $this->getServiceManager()->get('Device');
-	    		$device = $serviceDevice->getDeviceByAccountId($account->getAccountId(), false);
-	    		if (null !== $device) {
+	    		$devices = $serviceDevice->getDevicesByAccountId($account->getAccountId());
+	    		foreach ($devices as $device) {
 	    			$serviceDevice->removeDevice($device);
 	    		}
 	    	}
