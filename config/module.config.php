@@ -23,7 +23,7 @@ return [
 	],
 	'service_manager' => [
 		'invokables' => [
-            'Device' => '\DragonJsonServerDevice\Service\Device',
+            '\DragonJsonServerDevice\Service\Device' => '\DragonJsonServerDevice\Service\Device',
 		],
 	],
 	'doctrine' => [

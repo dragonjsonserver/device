@@ -26,9 +26,9 @@ class Device
 	{
 		$serviceManager = $this->getServiceManager();
 		
-		$sessionService = $serviceManager->get('Session');
+		$sessionService = $serviceManager->get('\DragonJsonServerAccount\Service\Session');
 		$session = $sessionService->getSession();
-		$device = $serviceManager->get('Device')->createDevice($session->getAccountId(), $platform, $credentials);
+		$device = $serviceManager->get('\DragonJsonServerDevice\Service\Device')->createDevice($session->getAccountId(), $platform, $credentials);
 		$data = $session->getData();
 		$data['device'] = $device->toArray();
 		$sessionService->changeData($session, $data);
@@ -43,13 +43,13 @@ class Device
 	{
 		$serviceManager = $this->getServiceManager();
 
-		$sessionService = $serviceManager->get('Session');
+		$sessionService = $serviceManager->get('\DragonJsonServerAccount\Service\Session');
 		$session = $sessionService->getSession();
 		$data = $session->getData();
 		if (!isset($data['device'])) {
 			throw new \DragonJsonServer\Exception('missing device in session', ['session' => $session->toArray()]);
 		}
-		$serviceDevice = $serviceManager->get('Device');
+		$serviceDevice = $serviceManager->get('\DragonJsonServerDevice\Service\Device');
 		$device = $serviceDevice->getDeviceById($data['device']['device_id']);
 		$serviceDevice->removeDevice($device);
 		unset($data['device']);
@@ -66,9 +66,9 @@ class Device
 	{
 		$serviceManager = $this->getServiceManager();
 
-		$sessionService = $serviceManager->get('Session');
+		$sessionService = $serviceManager->get('\DragonJsonServerAccount\Service\Session');
 		$session = $sessionService->getSession();
-		$serviceDevice = $serviceManager->get('Device');
+		$serviceDevice = $serviceManager->get('\DragonJsonServerDevice\Service\Device');
 		$device = $serviceDevice->getDeviceById($device_id);
 		if ($session->getAccountId() != $device->getAccountId()) {
 			throw new \DragonJsonServer\Exception(
@@ -95,7 +95,7 @@ class Device
 		$serviceManager = $this->getServiceManager();
 
 		$device = $serviceManager->get('Device')->getDeviceByPlatformAndCredentials($platform, $credentials);
-		$serviceSession = $serviceManager->get('Session');
+		$serviceSession = $serviceManager->get('\DragonJsonServerAccount\Service\Session');
 		$session = $serviceSession->createSession($device->getAccountId(), ['device' => $device->toArray()]);
 		$serviceSession->setSession($session);
 		return $session->toArray();
@@ -110,10 +110,10 @@ class Device
 	{
 		$serviceManager = $this->getServiceManager();
 		
-		$sessionService = $serviceManager->get('Session');
+		$sessionService = $serviceManager->get('\DragonJsonServerAccount\Service\Session');
 		$session = $sessionService->getSession();
 		$devices = $serviceManager->get('Device')->getDevicesByAccountId($session->getAccountId());
-		return $serviceManager->get('Doctrine')->toArray($devices);
+		return $serviceManager->get('\DragonJsonServerDoctrine\Service\Doctrine')->toArray($devices);
 	}
 	
     /**

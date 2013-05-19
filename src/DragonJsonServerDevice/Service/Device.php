@@ -35,7 +35,7 @@ class Device
 			->setAccountId($account_id)
 			->setPlatform($platform)
 			->setCredentials(\Zend\Json\Encoder::encode($credentials));
-		$this->getServiceManager()->get('Doctrine')->transactional(function ($entityManager) use ($device) {
+		$this->getServiceManager()->get('\DragonJsonServerDoctrine\Service\Doctrine')->transactional(function ($entityManager) use ($device) {
 			$entityManager->persist($device);
 			$entityManager->flush();
 			$this->getEventManager()->trigger(
@@ -54,7 +54,7 @@ class Device
 	 */
 	public function removeDevice(\DragonJsonServerDevice\Entity\Device $device)
 	{
-		$this->getServiceManager()->get('Doctrine')->transactional(function ($entityManager) use ($device) {
+		$this->getServiceManager()->get('\DragonJsonServerDoctrine\Service\Doctrine')->transactional(function ($entityManager) use ($device) {
 			$this->getEventManager()->trigger(
 				(new \DragonJsonServerDevice\Event\RemoveDevice())
 					->setTarget($this)

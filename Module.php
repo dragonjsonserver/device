@@ -50,7 +50,7 @@ class Module
     	$sharedManager->attach('DragonJsonServerAccount\Service\Account', 'RemoveAccount', 
 	    	function (\DragonJsonServerAccount\Event\RemoveAccount $eventRemoveAccount) {
 	    		$account = $eventRemoveAccount->getAccount();
-	    		$serviceDevice = $this->getServiceManager()->get('Device');
+	    		$serviceDevice = $this->getServiceManager()->get('\DragonJsonServerDevice\Service\Device');
 	    		$devices = $serviceDevice->getDevicesByAccountId($account->getAccountId());
 	    		foreach ($devices as $device) {
 	    			$serviceDevice->removeDevice($device);
