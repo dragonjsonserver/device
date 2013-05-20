@@ -112,7 +112,7 @@ class Device
 		
 		$sessionService = $serviceManager->get('\DragonJsonServerAccount\Service\Session');
 		$session = $sessionService->getSession();
-		$devices = $serviceManager->get('Device')->getDevicesByAccountId($session->getAccountId());
+		$devices = $serviceManager->get('\DragonJsonServerDevice\Service\Device')->getDevicesByAccountId($session->getAccountId());
 		return $serviceManager->get('\DragonJsonServerDoctrine\Service\Doctrine')->toArray($devices);
 	}
 	
