@@ -26,12 +26,12 @@ class Device
 	{
 		$serviceManager = $this->getServiceManager();
 		
-		$sessionService = $serviceManager->get('\DragonJsonServerAccount\Service\Session');
-		$session = $sessionService->getSession();
+		$serviceSession = $serviceManager->get('\DragonJsonServerAccount\Service\Session');
+		$session = $serviceSession->getSession();
 		$device = $serviceManager->get('\DragonJsonServerDevice\Service\Device')->createDevice($session->getAccountId(), $platform, $credentials);
 		$data = $session->getData();
 		$data['device'] = $device->toArray();
-		$sessionService->changeData($session, $data);
+        $serviceSession->changeData($session, $data);
 	}
 	
     /**
